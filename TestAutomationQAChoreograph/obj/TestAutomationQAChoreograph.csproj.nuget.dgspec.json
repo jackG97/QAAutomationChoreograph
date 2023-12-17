@@ -47,6 +47,10 @@
               "target": "Package",
               "version": "[3.11.0, )"
             },
+            "Dynamics365.UIAutomation.Api": {
+              "target": "Package",
+              "version": "[9.2.21084.148, )"
+            },
             "FluentAssertions": {
               "target": "Package",
               "version": "[6.12.0, )"

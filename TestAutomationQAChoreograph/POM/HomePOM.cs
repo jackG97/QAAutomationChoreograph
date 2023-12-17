@@ -17,7 +17,7 @@ namespace TestAutomationQAChoreograph.POM
         By SignInButton = By.XPath("//a[contains(.,'Sign In')]");
         By MyAccountTitle = By.XPath("//span[contains(.,'Welcome, Jack Gallaher!')]");
         By CreateAnAccountButton = By.XPath("//a[contains(.,'Create an Account')]");
-        By WhatsNewOption = By.XPath("//span[contains(.,'What's New')]");
+        By WhatsNewOption = By.XPath("//a[contains(@href,'https://magento.softwaretestingboard.com/what-is-new.html')]");
 
 
         public HomePOM(IWebDriver driver)

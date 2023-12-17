@@ -1,23 +1,19 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TechTalk.SpecFlow;
 using TestAutomationQAChoreograph.POM;
-using Microsoft.VisualBasic.FileIO;
-using NUnit.Framework.Internal;
-using NUnit.Framework;
 
 namespace TestAutomationQAChoreograph.StepDefinitions
 {
+    [Binding]
     public class NewClothingStepDefinitions
     {
+
         IWebDriver driver = new ChromeDriver();
 
-        [Given("I am logged into my account")]
-        public void IAmLoggedIntoMyAccount()
+        [Given(@"I am logged into my account")]
+        public void GivenIAmLoggedIntoMyAccount()
         {
             driver.Url = "https://magento.softwaretestingboard.com/";
             driver.Manage().Window.Maximize();
@@ -28,32 +24,53 @@ namespace TestAutomationQAChoreograph.StepDefinitions
             loginpom.Login();
         }
 
-        [When("When I Select the Whats New option on main menu")]
-        public void WhenISelecttheWhatsNewOptiononMainmMenu()
+        [When(@"I Select the Whats New option on my main menu")]
+        public void WhenISelectTheWhatsNewOptionOnMyMainMenu()
         {
             HomePOM homepom = new HomePOM(driver);
             homepom.SelectWhatsNew();
         }
 
-        [When("Im redirected to the Whats New Page")]
+        [When(@"Im redirected to the Whats New Page")]
         public void WhenImRedirectedToTheWhatsNewPage()
         {
             WhatsNewPOM whatsnewpom = new WhatsNewPOM(driver);
-            whatsnewpom.VerifyWhatsNewUrl();
+            whatsnewpom.VerifyWhatsNewUrl(); ;
         }
 
-        [When("I Scroll down towards the bottom of the page")]
-        public void IScrollDownToeardsTheBottomOfThePage()
+        [When(@"I Scroll down towards the bottom of the page")]
+        public void WhenIScrollDownTowardsTheBottomOfThePage()
         {
             WhatsNewPOM whatsnewpom = new WhatsNewPOM(driver);
             whatsnewpom.ScrollDownToNewClothes();
         }
 
-        [When("I see New clothing available")]
-        public void ISeeNewClothingAvailable()
+        [Then(@"I see New clothing available")]
+        public void ThenISeeNewClothingAvailable()
         {
             WhatsNewPOM whatsnewpom = new WhatsNewPOM(driver);
             whatsnewpom.ViewNewClothing();
         }
+
+        [When(@"I proceed to Hoodies and Jackets under '([^']*)'")]
+        public void WhenIProceedToHoodiesAndJacketsUnder(string p0)
+        {
+            WhatsNewPOM whatsnewpom = new WhatsNewPOM(driver);
+            whatsnewpom.HoodiesAndJacketsMen();
+
+        }
+
+        [Then(@"I can select an item I want to add to my wishlist")]
+        public void ThenICanSelectAnItemIWantToAddToMyWishlist()
+        {
+            ClothingGallaryPOM clothinggallerypom = new ClothingGallaryPOM(driver);
+            ItemDisplayPOM itemdisplaypom = new ItemDisplayPOM(driver);
+            WishListPOM wishlistpom = new WishListPOM(driver);
+            clothinggallerypom.SelectItemFromGallery();
+            itemdisplaypom.AddItemToWishList();
+            wishlistpom.VerifyWishListItemIsThere();
+            
+        }
+
     }
 }
