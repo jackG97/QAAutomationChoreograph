@@ -18,8 +18,10 @@ namespace TestAutomationQAChoreograph.POM
         By MyAccountTitle = By.XPath("//span[contains(.,'Welcome, Jack Gallaher!')]");
         By CreateAnAccountButton = By.XPath("//a[contains(.,'Create an Account')]");
         By WhatsNewOption = By.XPath("//a[contains(@href,'https://magento.softwaretestingboard.com/what-is-new.html')]");
-
-
+        By SubscribeToMailingListButton = By.XPath("//a[contains(@href, 'https://softwaretestingboard.com/subscribe/')]");
+        By SearchBar = By.XPath("//input[contains(@id,'search')]");
+        string searchvalue = "Jackets";
+        
         public HomePOM(IWebDriver driver)
         {
             this.driver = driver;
@@ -48,5 +50,28 @@ namespace TestAutomationQAChoreograph.POM
         {
             driver.FindElement(WhatsNewOption).Click();
         }
+
+        public void SelectSubscribeOption()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(SubscribeToMailingListButton)).Click();
+        }
+
+        public void SearchForClothing()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(SearchBar)).SendKeys(searchvalue);
+            
+        }
+
+        public void PressEnter()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(SearchBar)).SendKeys(Keys.Return);
+        }
+
+
+        
+
     }
 }

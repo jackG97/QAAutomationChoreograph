@@ -20,6 +20,14 @@ namespace TestAutomationQAChoreograph.POM
         By RemoveButton = By.XPath("//a[contains(@class, 'action delete')]");
         By OkConfirmationButton = By.XPath("//span[contains(., 'OK')]");
         By NoItemInBasketMessage = By.XPath("//strong[contains(., 'You have no items in your shopping cart.')]");
+        By ReviewOption = By.XPath("//a[contains(., 'Reviews')]");
+        By SummaryField = By.XPath("//input[contains(@id, 'summary_field')]");
+        string summary = "Great Item";
+        By ReviewField = By.XPath("//textarea[contains(@id, 'review_field')]");
+        string review = "Great Item, Will purchase again soon!";
+        By SubmitButton = By.XPath("//button[contains(@type, 'submit')]");
+        By SuccessfulReviewMessagePublished = By.XPath("//div[contains(., 'You submitted your review for moderation.')]");
+
 
 
         public ItemDisplayPOM(IWebDriver driver)
@@ -53,7 +61,7 @@ namespace TestAutomationQAChoreograph.POM
             Thread.Sleep(2000);
             ClothesColour[0].Click();
             wait.Until(ExpectedConditions.ElementExists(AddToWishListButton)).Click();
-            
+
         }
 
         public void RemoveItemFromBasket()
@@ -69,6 +77,29 @@ namespace TestAutomationQAChoreograph.POM
             wait.Until(ExpectedConditions.ElementExists(NoItemInBasketMessage));
         }
 
+        public void ReviewOptionMenu()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(ReviewOption)).Click();
+        }
 
+        public void FillOutReviewForm()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IList<IWebElement> StarRating = driver.FindElements(By.XPath("//div[contains(@class, 'control review-control-vote')]/..//label"));
+            Thread.Sleep(2000);
+            StarRating[2].Click();
+            wait.Until(ExpectedConditions.ElementExists(SummaryField)).SendKeys(summary);
+            wait.Until(ExpectedConditions.ElementExists(ReviewField)).SendKeys(review);
+            wait.Until(ExpectedConditions.ElementExists(SubmitButton)).Click();
+
+        }
+
+        public void VerifyReviewMessageIsSuccessful()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement ReviewSuccessMessage = wait.Until(ExpectedConditions.ElementExists(SuccessfulReviewMessagePublished));
+            ReviewSuccessMessage.IsVisible();
+        }
     }
 }
